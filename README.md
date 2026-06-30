@@ -16,7 +16,7 @@ The exporter runs as a **DaemonSet**, walks each PVC's data directory on the nod
 - Configurable metric prefix, scrape interval, and output unit
 - Prometheus-compatible `/metrics` endpoint
 - Helm chart with RBAC, DaemonSet, Service, and optional ServiceMonitor
-- Runs as non-root in a distroless container
+- Runs in a distroless container as root with only `CAP_DAC_READ_SEARCH` for read-only PVC traversal
 
 ## Metrics
 
@@ -130,6 +130,14 @@ golangci-lint run
 NODE_NAME=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}') \
   go run ./cmd/local-pvc-exporter --host-root=/
 ```
+
+## Troubleshooting
+
+### `du failed ... permission denied` on PVC data directories
+
+If logs show errors like `open .../pgdata: permission denied`, the exporter cannot traverse directories owned by other UIDs with restrictive modes (e.g. PostgreSQL `pgdata` at `0700`). The default Helm values run the container as root with only `CAP_DAC_READ_SEARCH` added — this bypasses read/execute permission checks without granting write access. The host filesystem mount remains read-only.
+
+After upgrading, confirm `scrape complete` reports the expected volume count with `errors: 0`, and that `local_pvc_used_bytes` is populated for affected PVCs.
 
 ## Example PromQL
 
