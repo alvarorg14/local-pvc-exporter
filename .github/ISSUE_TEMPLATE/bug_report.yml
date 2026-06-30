@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a bug or incorrect metrics
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected to happen.
+      placeholder: The exporter reports 0 used bytes for my hostPath PVC...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Exporter version
+      placeholder: v0.1.0 or image tag
+    validations:
+      required: true
+
+  - type: input
+    id: k8s
+    attributes:
+      label: Kubernetes distribution and version
+      placeholder: k3s v1.31.4
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration
+      description: Helm values or CLI flags (metric prefix, scrape interval, unit, host-root).
+    validations:
+      required: false
+
+  - type: textarea
+    id: manifests
+    attributes:
+      label: PV/PVC manifests
+      description: Redact secrets. Include volume type (hostPath/local).
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Exporter pod logs around scrape time.
+    validations:
+      required: false

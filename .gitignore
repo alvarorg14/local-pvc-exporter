@@ -1,0 +1,34 @@
+# Binaries
+/bin/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/local-pvc-exporter
+/bin/local-pvc-exporter
+
+# Test
+*.test
+*.out
+coverage.out
+coverage.html
+
+# Go
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Helm
+charts/*/charts/
+charts/*/*.tgz
