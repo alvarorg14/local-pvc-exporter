@@ -64,10 +64,6 @@ func (w *Walker) Measure(ctx context.Context, root string) (Result, error) {
 			return nil
 		}
 
-		if d.IsDir() && path != root {
-			// Continue into subdirectories.
-		}
-
 		sys := info.Sys()
 		if sys == nil {
 			return nil
