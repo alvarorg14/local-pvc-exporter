@@ -18,8 +18,8 @@ categories:
     label: 'documentation'
   - title: 'Deprecations 🧹'
     label: 'deprecations'
-  - title: 'Workflows 🤖'
-    label: 'github-actions'
+  - title: 'CI 🤖'
+    label: 'ci'
   - title: 'Other Changes 🛠️'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&'
@@ -37,7 +37,7 @@ version-resolver:
       - 'bug'
       - 'dependencies'
       - 'documentation'
-      - 'github-actions'
+      - 'ci'
   default: patch
 replacers:
   - search: '/(\w+)-(\d+)/g'
