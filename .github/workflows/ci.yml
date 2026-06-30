@@ -65,6 +65,9 @@ jobs:
       - name: Template chart
         run: helm template test charts/local-pvc-exporter > /dev/null
 
+      - name: Package chart
+        run: helm package charts/local-pvc-exporter
+
   goreleaser:
     runs-on: ubuntu-latest
     steps:
