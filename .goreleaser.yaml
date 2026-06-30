@@ -1,0 +1,62 @@
+version: 2
+
+project_name: local-pvc-exporter
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: local-pvc-exporter
+    main: ./cmd/local-pvc-exporter
+    binary: local-pvc-exporter
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+
+archives:
+  - formats:
+      - tar.gz
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  disable: true
+
+release:
+  mode: keep-existing
+  prerelease: auto
+
+dockers_v2:
+  - images:
+      - ghcr.io/alvarorg/local-pvc-exporter
+    tags:
+      - "{{ .Version }}"
+      - "{{ .Major }}.{{ .Minor }}"
+      - latest
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    dockerfile: Dockerfile.goreleaser
+    labels:
+      org.opencontainers.image.title: local-pvc-exporter
+      org.opencontainers.image.description: Prometheus exporter for hostPath and local PV capacity metrics per PVC
+    annotations:
+      org.opencontainers.image.url: https://github.com/alvarorg/local-pvc-exporter
+      org.opencontainers.image.source: https://github.com/alvarorg/local-pvc-exporter
+      org.opencontainers.image.version: "{{ .Version }}"
+      org.opencontainers.image.revision: "{{ .FullCommit }}"
+      org.opencontainers.image.created: "{{ .Date }}"
