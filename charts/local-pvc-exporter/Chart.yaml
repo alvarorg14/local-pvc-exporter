@@ -10,9 +10,9 @@ keywords:
   - kubernetes
   - pvc
   - storage
-home: https://github.com/alvarorg/local-pvc-exporter
+home: https://github.com/alvarorg14/local-pvc-exporter
 sources:
-  - https://github.com/alvarorg/local-pvc-exporter
+  - https://github.com/alvarorg14/local-pvc-exporter
 maintainers:
-  - name: alvarorg
-    url: https://github.com/alvarorg
+  - name: alvarorg14
+    url: https://github.com/alvarorg14

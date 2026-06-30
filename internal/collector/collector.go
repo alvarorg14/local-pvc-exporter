@@ -9,10 +9,10 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus"
 
-	"github.com/alvarorg/local-pvc-exporter/internal/config"
-	"github.com/alvarorg/local-pvc-exporter/internal/discovery"
-	"github.com/alvarorg/local-pvc-exporter/internal/diskusage"
-	"github.com/alvarorg/local-pvc-exporter/internal/kube"
+	"github.com/alvarorg14/local-pvc-exporter/internal/config"
+	"github.com/alvarorg14/local-pvc-exporter/internal/discovery"
+	"github.com/alvarorg14/local-pvc-exporter/internal/diskusage"
+	"github.com/alvarorg14/local-pvc-exporter/internal/kube"
 )
 
 // volumeSample holds scraped metrics for a single volume.

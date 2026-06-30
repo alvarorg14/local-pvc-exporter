@@ -1,4 +1,4 @@
-module github.com/alvarorg/local-pvc-exporter
+module github.com/alvarorg14/local-pvc-exporter
 
 go 1.23.0
 

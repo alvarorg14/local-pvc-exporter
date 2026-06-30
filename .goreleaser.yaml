@@ -42,7 +42,7 @@ release:
 
 dockers_v2:
   - images:
-      - ghcr.io/alvarorg/local-pvc-exporter
+      - ghcr.io/alvarorg14/local-pvc-exporter
     tags:
       - "{{ .Version }}"
       - "{{ .Major }}.{{ .Minor }}"
@@ -55,8 +55,8 @@ dockers_v2:
       org.opencontainers.image.title: local-pvc-exporter
       org.opencontainers.image.description: Prometheus exporter for hostPath and local PV capacity metrics per PVC
     annotations:
-      org.opencontainers.image.url: https://github.com/alvarorg/local-pvc-exporter
-      org.opencontainers.image.source: https://github.com/alvarorg/local-pvc-exporter
+      org.opencontainers.image.url: https://github.com/alvarorg14/local-pvc-exporter
+      org.opencontainers.image.source: https://github.com/alvarorg14/local-pvc-exporter
       org.opencontainers.image.version: "{{ .Version }}"
       org.opencontainers.image.revision: "{{ .FullCommit }}"
       org.opencontainers.image.created: "{{ .Date }}"
