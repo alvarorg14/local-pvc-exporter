@@ -12,9 +12,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/alvarorg/local-pvc-exporter/internal/collector"
-	"github.com/alvarorg/local-pvc-exporter/internal/config"
-	"github.com/alvarorg/local-pvc-exporter/internal/kube"
+	"github.com/alvarorg14/local-pvc-exporter/internal/collector"
+	"github.com/alvarorg14/local-pvc-exporter/internal/config"
+	"github.com/alvarorg14/local-pvc-exporter/internal/kube"
 )
 
 var version = "dev"

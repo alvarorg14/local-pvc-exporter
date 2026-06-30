@@ -8,7 +8,7 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/alvarorg/local-pvc-exporter/internal/kube"
+	"github.com/alvarorg14/local-pvc-exporter/internal/kube"
 )
 
 // VolumeType identifies the PV volume source type.
