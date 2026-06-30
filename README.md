@@ -39,10 +39,11 @@ When using non-byte units (`kib`, `mib`, `gib`), the metric suffix changes accor
 
 ## Quick start (Helm)
 
-Container images are published to `ghcr.io/alvarorg14/local-pvc-exporter` on release (tags: `vX.Y.Z`, `X.Y`, `latest`). The Helm chart uses this image by default.
+Container images are published to `ghcr.io/alvarorg14/local-pvc-exporter` on release (tags: `vX.Y.Z`, `X.Y`, `latest`). The Helm chart is published to `oci://ghcr.io/alvarorg14/charts/local-pvc-exporter` and uses this image by default.
 
 ```bash
-helm install local-pvc-exporter ./charts/local-pvc-exporter \
+helm install local-pvc-exporter oci://ghcr.io/alvarorg14/charts/local-pvc-exporter \
+  --version X.Y.Z \
   --namespace monitoring \
   --create-namespace
 ```
@@ -50,10 +51,19 @@ helm install local-pvc-exporter ./charts/local-pvc-exporter \
 Enable Prometheus Operator scraping:
 
 ```bash
-helm install local-pvc-exporter ./charts/local-pvc-exporter \
+helm install local-pvc-exporter oci://ghcr.io/alvarorg14/charts/local-pvc-exporter \
+  --version X.Y.Z \
   --namespace monitoring \
   --create-namespace \
   --set serviceMonitor.enabled=true
+```
+
+For local development, install from the chart source:
+
+```bash
+helm install local-pvc-exporter ./charts/local-pvc-exporter \
+  --namespace monitoring \
+  --create-namespace
 ```
 
 ## Configuration
