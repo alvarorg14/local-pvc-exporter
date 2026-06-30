@@ -18,10 +18,8 @@ podAnnotations: {}
 podLabels: {}
 
 podSecurityContext:
-  runAsNonRoot: true
-  runAsUser: 65532
-  runAsGroup: 65532
-  fsGroup: 65532
+  runAsUser: 0
+  runAsGroup: 0
 
 securityContext:
   allowPrivilegeEscalation: false
@@ -29,6 +27,8 @@ securityContext:
   capabilities:
     drop:
       - ALL
+    add:
+      - DAC_READ_SEARCH
 
 resources:
   limits:
