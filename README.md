@@ -39,6 +39,8 @@ When using non-byte units (`kib`, `mib`, `gib`), the metric suffix changes accor
 
 ## Quick start (Helm)
 
+Container images are published to `ghcr.io/alvarorg14/local-pvc-exporter` on release (tags: `vX.Y.Z`, `X.Y`, `latest`). The Helm chart uses this image by default.
+
 ```bash
 helm install local-pvc-exporter ./charts/local-pvc-exporter \
   --namespace monitoring \
@@ -102,12 +104,17 @@ flowchart LR
 
 ## Local development
 
+Requires Go 1.23+.
+
 ```bash
 # Run tests
-make test
+go test -race ./...
 
 # Build
-make build
+go build -o /dev/null ./cmd/local-pvc-exporter
+
+# Lint (requires golangci-lint)
+golangci-lint run
 
 # Run locally (requires kubeconfig and NODE_NAME)
 NODE_NAME=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}') \
