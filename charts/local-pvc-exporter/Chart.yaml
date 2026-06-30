@@ -1,0 +1,18 @@
+apiVersion: v2
+name: local-pvc-exporter
+description: Prometheus exporter for hostPath and local PV capacity metrics per PVC
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - prometheus
+  - exporter
+  - kubernetes
+  - pvc
+  - storage
+home: https://github.com/alvarorg/local-pvc-exporter
+sources:
+  - https://github.com/alvarorg/local-pvc-exporter
+maintainers:
+  - name: alvarorg
+    url: https://github.com/alvarorg

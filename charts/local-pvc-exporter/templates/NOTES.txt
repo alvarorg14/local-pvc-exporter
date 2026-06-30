@@ -1,0 +1,18 @@
+local-pvc-exporter has been deployed.
+
+Get the application URL by running these commands:
+
+  kubectl -n {{ .Release.Namespace }} get pods -l "app.kubernetes.io/name={{ include "local-pvc-exporter.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
+
+Metrics are exposed on port {{ .Values.service.port }} at /metrics.
+
+To verify metrics from a pod:
+
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "local-pvc-exporter.fullname" . }} {{ .Values.service.port }}:{{ .Values.service.port }}
+  curl -s localhost:{{ .Values.service.port }}/metrics | head
+
+Configuration:
+  metric prefix:    {{ .Values.metricPrefix }}
+  scrape interval:  {{ .Values.scrapeInterval }}
+  unit:             {{ .Values.unit }}
+  host root mount:  {{ .Values.hostRoot }} (host path: {{ .Values.hostRootMountPath }})
