@@ -12,12 +12,12 @@
     },
     {
       "matchManagers": ["github-actions"],
-      "labels": ["github-actions"]
+      "labels": ["ci"]
     },
     {
       "matchManagers": ["custom.regex"],
       "matchDepNames": ["golangci/golangci-lint"],
-      "labels": ["github-actions"]
+      "labels": ["ci"]
     },
     {
       "groupName": "k8s.io packages",
