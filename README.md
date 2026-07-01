@@ -1,14 +1,18 @@
 <div align="center">
 
-[![local-pvc-exporter banner](assets/banner.png)](https://github.com/alvarorg14/local-pvc-exporter)
+# 💾 Local PVC Exporter
 
-**Per-PVC storage metrics for Kubernetes — when kubelet stats aren't enough**
+<h3>Per PVC storage metrics for Kubernetes</h3>
+
+<sub><em>When kubelet stats aren't enough</em></sub>
+
+<br>
 
 [![CI](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/ci.yml/badge.svg)](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/ci.yml)
 [![Release](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/release.yml/badge.svg)](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/release.yml)
 [![Latest Release](https://img.shields.io/github/v/release/alvarorg14/local-pvc-exporter)](https://github.com/alvarorg14/local-pvc-exporter/releases)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/alvarorg14/local-pvc-exporter)](https://github.com/alvarorg14/local-pvc-exporter/blob/main/go.mod)
-[![Go Report Card](https://goreportcard.com/badge/github.com/alvarorg14/local-pvc-exporter)](https://goreportcard.com/report/github.com/alvarorg14/local-pvc-exporter)
+[![Go Report Card](https://img.shields.io/badge/Go_Report_Card-view-00ADD8?logo=go&logoColor=white)](https://goreportcard.com/report/github.com/alvarorg14/local-pvc-exporter)
 [![License](https://img.shields.io/github/license/alvarorg14/local-pvc-exporter)](https://github.com/alvarorg14/local-pvc-exporter/blob/main/LICENSE)
 [![GHCR](https://img.shields.io/badge/GHCR-ghcr.io%2Falvarorg14%2Flocal--pvc--exporter-blue)](https://github.com/alvarorg14/local-pvc-exporter/pkgs/container/local-pvc-exporter)
 [![Helm OCI](https://img.shields.io/badge/Helm-oci%3A%2F%2Fghcr.io%2Falvarorg14%2Fcharts%2Flocal--pvc--exporter-0F1689)](https://github.com/alvarorg14/local-pvc-exporter/pkgs/container/charts%2Flocal-pvc-exporter)
