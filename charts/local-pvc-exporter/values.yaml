@@ -1,26 +1,40 @@
+# -- Number of DaemonSet pods. Ignored: the chart deploys a DaemonSet, one pod per node.
 replicaCount: 1
 
 image:
+  # -- Container image repository
   repository: ghcr.io/alvarorg14/local-pvc-exporter
+  # -- Image tag. Defaults to the chart appVersion when empty
   tag: ""
+  # -- Image pull policy
   pullPolicy: IfNotPresent
 
+# -- Secrets for pulling images from private registries
 imagePullSecrets: []
+# -- Override the chart name used in labels and resource names
 nameOverride: ""
+# -- Override the full release name used for all resources
 fullnameOverride: ""
 
 serviceAccount:
+  # -- Create a dedicated ServiceAccount for the exporter
   create: true
+  # -- Annotations to add to the ServiceAccount
   annotations: {}
+  # -- ServiceAccount name. Generated from the release fullname when empty and create is true
   name: ""
 
+# -- Annotations to add to exporter pods
 podAnnotations: {}
+# -- Labels to add to exporter pods
 podLabels: {}
 
+# -- Pod-level security context. Default runs as root to traverse PVC data directories with restrictive permissions
 podSecurityContext:
   runAsUser: 0
   runAsGroup: 0
 
+# -- Container-level security context. Adds CAP_DAC_READ_SEARCH for read-only traversal of host paths
 securityContext:
   allowPrivilegeEscalation: false
   readOnlyRootFilesystem: true
@@ -30,6 +44,7 @@ securityContext:
     add:
       - DAC_READ_SEARCH
 
+# -- CPU and memory resource requests and limits for the exporter container
 resources:
   limits:
     memory: 128Mi
@@ -37,7 +52,9 @@ resources:
     cpu: 50m
     memory: 128Mi
 
+# -- Node labels for pod assignment
 nodeSelector: {}
+# -- Tolerations for pod assignment. Default tolerates control-plane/master taints so the DaemonSet runs on all nodes
 tolerations:
   - key: node-role.kubernetes.io/control-plane
     operator: Exists
@@ -46,32 +63,52 @@ tolerations:
     operator: Exists
     effect: NoSchedule
 
+# -- Affinity rules for pod assignment
 affinity: {}
 
+# -- Mount point of the host filesystem inside the pod (maps to `--host-root`)
 hostRoot: /host
+# -- Host path mounted read-only at hostRoot for PVC directory traversal
 hostRootMountPath: /
 
+# -- Prefix for all exported metrics (maps to `--metric-prefix`)
 metricPrefix: local_pvc
+# -- Interval between PVC capacity scrapes (maps to `--scrape-interval`)
 scrapeInterval: 5m
+# -- Output unit for capacity metrics: `bytes`, `kib`, `mib`, `gib` (maps to `--unit`)
 unit: bytes
+# -- HTTP listen address for metrics and health endpoints (maps to `--listen-address`)
 listenAddress: ":8080"
+# -- Maximum concurrent du operations per scrape (maps to `--du-concurrency`)
 duConcurrency: 4
+# -- Timeout for a single du operation (maps to `--du-timeout`)
 duTimeout: 10m
 
 service:
+  # -- Kubernetes Service type
   type: ClusterIP
+  # -- Service port exposed for Prometheus scraping
   port: 8080
+  # -- Annotations to add to the Service
   annotations: {}
 
 serviceMonitor:
+  # -- Create a Prometheus Operator ServiceMonitor resource
   enabled: false
+  # -- Scrape interval for the ServiceMonitor
   interval: 30s
+  # -- Scrape timeout for the ServiceMonitor
   scrapeTimeout: 10s
+  # -- Additional labels for the ServiceMonitor (e.g. release label for Prometheus Operator)
   labels: {}
+  # -- Namespace for the ServiceMonitor. Defaults to the release namespace when empty
   namespace: ""
 
 rbac:
+  # -- Create ClusterRole and ClusterRoleBinding for PV/PVC/node discovery
   create: true
 
+# -- Extra command-line arguments passed to the exporter
 extraArgs: []
+# -- Extra environment variables for the exporter container
 extraEnv: []
