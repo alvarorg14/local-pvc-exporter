@@ -1,0 +1,34 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.badgesSection" . }}
+
+## Installing
+
+```bash
+helm install local-pvc-exporter oci://ghcr.io/alvarorg14/charts/local-pvc-exporter \
+  --namespace monitoring \
+  --create-namespace
+```
+
+Enable Prometheus Operator scraping:
+
+```bash
+helm install local-pvc-exporter oci://ghcr.io/alvarorg14/charts/local-pvc-exporter \
+  --namespace monitoring \
+  --create-namespace \
+  --set serviceMonitor.enabled=true
+```
+
+For local development, install from the chart source:
+
+```bash
+helm install local-pvc-exporter ./charts/local-pvc-exporter \
+  --namespace monitoring \
+  --create-namespace
+```
+
+{{ template "chart.valuesHeader" . }}
+{{ template "chart.valuesTable" . }}
+
+{{ template "helm-docs.versionFooter" . }}
