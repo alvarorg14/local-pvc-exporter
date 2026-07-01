@@ -10,7 +10,7 @@ jobs:
     name: Update Stable Release Draft
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@139054aeaa9adc52ab36ddf67437541f039b88e2 # v7
+      - uses: release-drafter/release-drafter@4d75298e00d9e34c483e5ff8c68d0ea1c1940c1e # v7
         with:
           config-name: release-drafter-template.yml
           prerelease: false
@@ -22,7 +22,7 @@ jobs:
     name: Update Prerelease Draft
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@139054aeaa9adc52ab36ddf67437541f039b88e2 # v7
+      - uses: release-drafter/release-drafter@4d75298e00d9e34c483e5ff8c68d0ea1c1940c1e # v7
         with:
           config-name: release-drafter-template.yml
           prerelease: true
