@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":dependencyDashboard"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["gomod", "dockerfile"],
+      "labels": ["dependencies"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "labels": ["github-actions"]
+    },
+    {
+      "matchManagers": ["custom.regex"],
+      "matchDepNames": ["golangci/golangci-lint"],
+      "labels": ["github-actions"]
+    },
+    {
+      "groupName": "k8s.io packages",
+      "matchPackageNames": ["/k8s.io/*/"]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.github/workflows/ci\\.yml$/"],
+      "matchStrings": [
+        "version: (?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    }
+  ]
+}
