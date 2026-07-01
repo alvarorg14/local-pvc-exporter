@@ -1,15 +1,68 @@
-# local-pvc-exporter
+<div align="center">
+
+[![local-pvc-exporter banner](assets/banner.png)](https://github.com/alvarorg14/local-pvc-exporter)
+
+**Per-PVC storage metrics for Kubernetes — when kubelet stats aren't enough**
+
+[![CI](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/ci.yml/badge.svg)](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/ci.yml)
+[![Release](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/release.yml/badge.svg)](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/release.yml)
+[![Latest Release](https://img.shields.io/github/v/release/alvarorg14/local-pvc-exporter)](https://github.com/alvarorg14/local-pvc-exporter/releases)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/alvarorg14/local-pvc-exporter)](https://github.com/alvarorg14/local-pvc-exporter/blob/main/go.mod)
+[![Go Report Card](https://goreportcard.com/badge/github.com/alvarorg14/local-pvc-exporter)](https://goreportcard.com/report/github.com/alvarorg14/local-pvc-exporter)
+[![License](https://img.shields.io/github/license/alvarorg14/local-pvc-exporter)](https://github.com/alvarorg14/local-pvc-exporter/blob/main/LICENSE)
+[![GHCR](https://img.shields.io/badge/GHCR-ghcr.io%2Falvarorg14%2Flocal--pvc--exporter-blue)](https://github.com/alvarorg14/local-pvc-exporter/pkgs/container/local-pvc-exporter)
+[![Helm OCI](https://img.shields.io/badge/Helm-oci%3A%2F%2Fghcr.io%2Falvarorg14%2Fcharts%2Flocal--pvc--exporter-0F1689)](https://github.com/alvarorg14/local-pvc-exporter/pkgs/container/charts%2Flocal-pvc-exporter)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/alvarorg14/local-pvc-exporter/pulls)
+
+<br>
+
+[![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://go.dev/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+[![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)](https://prometheus.io/)
+[![Helm](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)](https://helm.sh/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+
+<br>
+
+[Quick Start](#-quick-start-helm) · [Metrics](#-metrics) · [Configuration](#%EF%B8%8F-configuration) · [Contributing](#-contributing)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Why local-pvc-exporter?](#-why-local-pvc-exporter)
+- [Features](#-features)
+- [Metrics](#-metrics)
+- [Quick Start (Helm)](#-quick-start-helm)
+- [Configuration](#%EF%B8%8F-configuration)
+- [How It Works](#-how-it-works)
+- [Dashboard](#-dashboard)
+- [Local Development](#-local-development)
+- [Troubleshooting](#-troubleshooting)
+- [Example PromQL](#-example-promql)
+- [Contributing](#-contributing)
+- [Security](#-security)
+- [License](#-license)
+
+---
+
+## 📖 Overview
 
 A Prometheus exporter for **per-PVC storage metrics** on Kubernetes clusters where `kubelet_volume_stats_*` metrics are missing or inaccurate.
+
+The exporter runs as a **DaemonSet**, walks each PVC's data directory on the node (du-style), and exposes accurate capacity and usage metrics with standard Kubernetes labels.
+
+## 🤔 Why local-pvc-exporter?
 
 Designed for **hostPath** and **local** PersistentVolumes — common in k3s and edge deployments — where:
 
 - `hostPath` PVs do not emit `kubelet_volume_stats_*` metrics at all
 - `local` PVs report filesystem-level stats instead of per-volume usage
 
-The exporter runs as a **DaemonSet**, walks each PVC's data directory on the node (du-style), and exposes accurate capacity and usage metrics with standard Kubernetes labels.
-
-## Features
+## ✨ Features
 
 - Per-PVC metrics for `hostPath` and `local` volume types
 - Du-style used capacity measurement (inode de-duplication, single-filesystem boundary)
@@ -18,7 +71,7 @@ The exporter runs as a **DaemonSet**, walks each PVC's data directory on the nod
 - Helm chart with RBAC, DaemonSet, Service, and optional ServiceMonitor
 - Runs in a distroless container as root with only `CAP_DAC_READ_SEARCH` for read-only PVC traversal
 
-## Metrics
+## 📊 Metrics
 
 Default prefix: `local_pvc` (configurable). Default unit: `bytes`.
 
@@ -37,11 +90,13 @@ Default prefix: `local_pvc` (configurable). Default unit: `bytes`.
 
 **Labels:** `persistentvolumeclaim`, `namespace`, `persistentvolume`, `storageclass`, `node`, `volume_type`
 
-Inode metrics differ in scope: `local_pvc_inodes` and `local_pvc_inodes_free` are filesystem-level (the whole backing disk for local/hostPath volumes, matching kubelet behavior), while `local_pvc_inodes_used` is a per-PVC du-style count of files and directories inside the volume path and therefore intentionally differs from `kubelet_volume_stats_inodes_used` on k3s and similar setups.
+> **Note:** Inode metrics differ in scope. `local_pvc_inodes` and `local_pvc_inodes_free` are filesystem-level (the whole backing disk for local/hostPath volumes, matching kubelet behavior), while `local_pvc_inodes_used` is a per-PVC du-style count of files and directories inside the volume path and therefore intentionally differs from `kubelet_volume_stats_inodes_used` on k3s and similar setups.
 
 When using non-byte units (`kib`, `mib`, `gib`), the metric suffix changes accordingly (e.g. `local_pvc_used_kib`).
 
-## Quick start (Helm)
+## 🚀 Quick Start (Helm)
+
+> **New here?** See [QUICKSTART.md](QUICKSTART.md) for a step-by-step get-running guide.
 
 Container images are published to `ghcr.io/alvarorg14/local-pvc-exporter` on release (tags: `vX.Y.Z`, `X.Y`, `latest`). The Helm chart is published to `oci://ghcr.io/alvarorg14/charts/local-pvc-exporter` and uses this image by default.
 
@@ -70,7 +125,7 @@ helm install local-pvc-exporter ./charts/local-pvc-exporter \
   --create-namespace
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 | Flag / Env | Default | Description |
 |------------|---------|-------------|
@@ -98,7 +153,7 @@ serviceMonitor:
   enabled: true
 ```
 
-## How it works
+## 🔧 How It Works
 
 ```mermaid
 flowchart LR
@@ -116,26 +171,40 @@ flowchart LR
 3. Used bytes are computed by walking the directory tree under the mounted host root.
 4. Metrics are cached and refreshed on the configured interval; Prometheus scrapes `/metrics` cheaply.
 
-## Local development
+## 📈 Dashboard
 
-Requires Go 1.23+.
+<div align="center">
+
+<!-- Drop your Grafana dashboard screenshot at assets/grafana-dashboard.png -->
+![Grafana dashboard placeholder — add assets/grafana-dashboard.png](assets/grafana-dashboard.png)
+
+*Add a Grafana dashboard screenshot at `assets/grafana-dashboard.png` to showcase PVC usage panels.*
+
+</div>
+
+## 💻 Local Development
+
+Requires Go 1.23+ and [golangci-lint](https://golangci-lint.run/) for linting.
+
+Run `make help` to list all available targets:
 
 ```bash
-# Run tests
-go test -race ./...
+# Run tests (go test -race ./...)
+make test
 
-# Build
-go build -o /dev/null ./cmd/local-pvc-exporter
+# Build binary to bin/local-pvc-exporter
+make build
 
-# Lint (requires golangci-lint)
-golangci-lint run
+# Lint (golangci-lint run)
+make lint
 
 # Run locally (requires kubeconfig and NODE_NAME)
-NODE_NAME=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}') \
-  go run ./cmd/local-pvc-exporter --host-root=/
+make run
 ```
 
-## Troubleshooting
+See [AGENTS.md](AGENTS.md) for architecture details and AI assistant guidelines.
+
+## 🔍 Troubleshooting
 
 ### `du failed ... permission denied` on PVC data directories
 
@@ -143,7 +212,7 @@ If logs show errors like `open .../pgdata: permission denied`, the exporter cann
 
 After upgrading, confirm `scrape complete` reports the expected volume count with `errors: 0`, and that `local_pvc_used_bytes` is populated for affected PVCs.
 
-## Example PromQL
+## 📉 Example PromQL
 
 ```promql
 # PVC usage ratio
@@ -156,10 +225,30 @@ local_pvc_used_ratio > 0.8
 local_pvc_available_bytes{persistentvolumeclaim="my-data"}
 ```
 
-## License
+## 🤝 Contributing
+
+Contributions are welcome! Issues and pull requests help make this project better for everyone.
+
+- Read [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow
+- Follow our [Code of Conduct](CODE_OF_CONDUCT.md)
+- See [AGENTS.md](AGENTS.md) if you're an AI assistant or want deeper architecture context
+
+## 🔒 Security
+
+If you discover a security vulnerability, please report it via a [private GitHub security advisory](https://github.com/alvarorg14/local-pvc-exporter/security/advisories/new). Do **not** open a public issue.
+
+See [SECURITY.md](SECURITY.md) for the full security policy.
+
+## 📄 License
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Apache License 2.0 — see [LICENSE](LICENSE).
 
-## Contributing
+---
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+<div align="center">
+
+Made with ❤️ using Go, Kubernetes, and Prometheus
+
+</div>
