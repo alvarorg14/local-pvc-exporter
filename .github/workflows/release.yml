@@ -41,7 +41,7 @@ jobs:
         run: echo "GORELEASER_CURRENT_TAG=${{ github.event.release.tag_name }}" >> "$GITHUB_ENV"
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           version: latest
           args: release --clean
