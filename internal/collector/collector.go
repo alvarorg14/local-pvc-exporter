@@ -21,6 +21,8 @@ type volumeSample struct {
 	capacityBytes int64
 	usedBytes     int64
 	inodesUsed    int64
+	inodesTotal   int64
+	inodesFree    int64
 }
 
 // Collector scrapes PVC metrics on an interval and exposes them via Prometheus.
@@ -40,6 +42,8 @@ type Collector struct {
 	availableGauge  *prometheus.GaugeVec
 	usedRatioGauge  *prometheus.GaugeVec
 	inodesUsedGauge *prometheus.GaugeVec
+	inodesGauge     *prometheus.GaugeVec
+	inodesFreeGauge *prometheus.GaugeVec
 
 	scrapeDuration prometheus.Gauge
 	scrapeErrorsM  prometheus.Gauge
@@ -94,6 +98,16 @@ func New(cfg *config.Config, client *kube.Client, reg prometheus.Registerer) *Co
 		Help: "Number of files and directories in the PVC data path.",
 	}, labelNames)
 
+	c.inodesGauge = prometheus.NewGaugeVec(prometheus.GaugeOpts{
+		Name: prefix + "_inodes",
+		Help: "Total inodes of the filesystem backing the PVC data path.",
+	}, labelNames)
+
+	c.inodesFreeGauge = prometheus.NewGaugeVec(prometheus.GaugeOpts{
+		Name: prefix + "_inodes_free",
+		Help: "Free inodes of the filesystem backing the PVC data path.",
+	}, labelNames)
+
 	c.scrapeDuration = prometheus.NewGauge(prometheus.GaugeOpts{
 		Name: prefix + "_scrape_duration_seconds",
 		Help: "Duration of the last scrape in seconds.",
@@ -115,6 +129,8 @@ func New(cfg *config.Config, client *kube.Client, reg prometheus.Registerer) *Co
 		c.availableGauge,
 		c.usedRatioGauge,
 		c.inodesUsedGauge,
+		c.inodesGauge,
+		c.inodesFreeGauge,
 		c.scrapeDuration,
 		c.scrapeErrorsM,
 		c.lastScrapeTS,
@@ -193,6 +209,8 @@ func (c *Collector) scrape(ctx context.Context) {
 				capacityBytes: vol.CapacityBytes,
 				usedBytes:     result.UsedBytes,
 				inodesUsed:    result.InodesUsed,
+				inodesTotal:   result.InodesTotal,
+				inodesFree:    result.InodesFree,
 			})
 			mu.Unlock()
 		}(vol)
@@ -217,6 +235,8 @@ func (c *Collector) updateMetrics(samples []volumeSample, duration time.Duration
 	c.availableGauge.Reset()
 	c.usedRatioGauge.Reset()
 	c.inodesUsedGauge.Reset()
+	c.inodesGauge.Reset()
+	c.inodesFreeGauge.Reset()
 
 	for _, s := range samples {
 		capacity := c.cfg.ConvertBytes(s.capacityBytes)
@@ -233,6 +253,8 @@ func (c *Collector) updateMetrics(samples []volumeSample, duration time.Duration
 		}
 		c.usedRatioGauge.With(s.labels).Set(ratio)
 		c.inodesUsedGauge.With(s.labels).Set(float64(s.inodesUsed))
+		c.inodesGauge.With(s.labels).Set(float64(s.inodesTotal))
+		c.inodesFreeGauge.With(s.labels).Set(float64(s.inodesFree))
 	}
 
 	c.samples = samples

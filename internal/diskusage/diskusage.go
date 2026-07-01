@@ -13,8 +13,10 @@ const blockSize = 512
 
 // Result holds the outcome of a disk usage walk.
 type Result struct {
-	UsedBytes  int64
-	InodesUsed int64
+	UsedBytes   int64
+	InodesUsed  int64
+	InodesTotal int64
+	InodesFree  int64
 }
 
 // Walker measures directory usage du-style.
@@ -39,6 +41,13 @@ func (w *Walker) Measure(ctx context.Context, root string) (Result, error) {
 	if !info.IsDir() {
 		return Result{}, fmt.Errorf("root %q is not a directory", root)
 	}
+
+	var st syscall.Statfs_t
+	if err := syscall.Statfs(root, &st); err != nil {
+		return Result{}, fmt.Errorf("statfs %q: %w", root, err)
+	}
+	inodesTotal := int64(st.Files)
+	inodesFree := int64(st.Ffree)
 
 	dev := deviceID(info.Sys())
 	seen := make(map[inodeKey]struct{})
@@ -94,8 +103,10 @@ func (w *Walker) Measure(ctx context.Context, root string) (Result, error) {
 	}
 
 	return Result{
-		UsedBytes:  usedBytes,
-		InodesUsed: inodes,
+		UsedBytes:   usedBytes,
+		InodesUsed:  inodes,
+		InodesTotal: inodesTotal,
+		InodesFree:  inodesFree,
 	}, nil
 }
 
