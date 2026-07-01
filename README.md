@@ -243,6 +243,10 @@ If you discover a security vulnerability, please report it via a [private GitHub
 
 See [SECURITY.md](SECURITY.md) for the full security policy.
 
+**Dependency maintenance:** [Renovate](https://docs.renovatebot.com/) opens pull requests for Go modules, Docker base images, and GitHub Actions updates. Install the [Renovate GitHub App](https://github.com/apps/renovate) on this repository to enable it.
+
+**Vulnerability scanning:** CI runs [`govulncheck`](https://go.dev/security/vuln/) on every push and pull request to detect known vulnerabilities in Go dependencies that affect this codebase.
+
 ## 📄 License
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)

@@ -122,8 +122,13 @@ Triggers on push/PR to `main`:
 |-----|---------|
 | test | `go mod verify`, `go test -race -coverprofile=coverage.out ./...`, `go build` |
 | lint | golangci-lint v2.12.2 |
+| vuln | `govulncheck ./...` |
 | helm | `helm lint`, `helm template`, `helm package` |
 | goreleaser | `goreleaser check`, `goreleaser release --snapshot --clean` |
+
+### Dependency updates (Renovate)
+
+[Renovate](https://docs.renovatebot.com/) is configured in [`renovate.json`](renovate.json) to propose updates for Go modules, Docker base images, and GitHub Actions. Pull requests are labeled `dependencies` or `github-actions` to satisfy the PR policy below. Install the [Renovate GitHub App](https://github.com/apps/renovate) on the repository to enable automated update PRs.
 
 ### PR Policy (`.github/workflows/pr-policy.yml`)
 
