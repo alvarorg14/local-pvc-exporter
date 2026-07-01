@@ -51,7 +51,7 @@ For architecture details and AI assistant guidelines, see [AGENTS.md](AGENTS.md)
 - Update documentation when behavior or configuration changes.
 - Use conventional commit messages when possible (e.g. `feat:`, `fix:`, `docs:`).
 - Ensure CI passes before requesting review.
-- Add exactly one policy label to your PR: `breaking-change`, `feature`, `enhancement`, `bug`, `dependencies`, `documentation`, `deprecations`, or `github-actions`.
+- Add exactly one policy label to your PR: `breaking-change`, `feature`, `enhancement`, `bug`, `dependencies`, `documentation`, `deprecations`, or `ci`.
 
 ## Reporting issues
 

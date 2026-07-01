@@ -128,13 +128,13 @@ Triggers on push/PR to `main`:
 
 ### Dependency updates (Renovate)
 
-[Renovate](https://docs.renovatebot.com/) is configured in [`renovate.json`](renovate.json) to propose updates for Go modules, Docker base images, and GitHub Actions. Pull requests are labeled `dependencies` or `github-actions` to satisfy the PR policy below. Install the [Renovate GitHub App](https://github.com/apps/renovate) on the repository to enable automated update PRs.
+[Renovate](https://docs.renovatebot.com/) is configured in [`renovate.json`](renovate.json) to propose updates for Go modules, Docker base images, and GitHub Actions. Pull requests are labeled `dependencies` or `ci` to satisfy the PR policy below. Install the [Renovate GitHub App](https://github.com/apps/renovate) on the repository to enable automated update PRs.
 
 ### PR Policy (`.github/workflows/pr-policy.yml`)
 
 Pull requests must carry **exactly one** label:
 
-- `breaking-change`, `feature`, `enhancement`, `bug`, `dependencies`, `documentation`, `deprecations`, `github-actions`
+- `breaking-change`, `feature`, `enhancement`, `bug`, `dependencies`, `documentation`, `deprecations`, `ci`
 
 ### Release (`.github/workflows/release.yml`)
 
