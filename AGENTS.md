@@ -19,7 +19,7 @@ This document provides context and guidelines for AI coding assistants working o
 
 - **Location**: `cmd/local-pvc-exporter/` (main entry), `internal/` (core logic)
 - **Module**: `github.com/alvarorg14/local-pvc-exporter`
-- **Go version**: 1.23+
+- **Go version**: 1.26+
 - **Key dependencies**: `prometheus/client_golang`, `k8s.io/client-go`
 
 ### Key Components
@@ -96,7 +96,7 @@ make helm-lint # helm lint + helm template
 
 ### Prerequisites
 
-- Go 1.23+
+- Go 1.26+
 - [golangci-lint](https://golangci-lint.run/) v2.x (CI uses v2.12.2)
 - Helm 3 (for chart validation)
 - kubectl (for `make run`)
@@ -122,8 +122,13 @@ Triggers on push/PR to `main`:
 |-----|---------|
 | test | `go mod verify`, `go test -race -coverprofile=coverage.out ./...`, `go build` |
 | lint | golangci-lint v2.12.2 |
+| vuln | `govulncheck ./...` |
 | helm | `helm lint`, `helm template`, `helm package` |
 | goreleaser | `goreleaser check`, `goreleaser release --snapshot --clean` |
+
+### Dependency updates (Renovate)
+
+[Renovate](https://docs.renovatebot.com/) is configured in [`renovate.json`](renovate.json) to propose updates for Go modules, Docker base images, and GitHub Actions. Pull requests are labeled `dependencies` or `github-actions` to satisfy the PR policy below. Install the [Renovate GitHub App](https://github.com/apps/renovate) on the repository to enable automated update PRs.
 
 ### PR Policy (`.github/workflows/pr-policy.yml`)
 

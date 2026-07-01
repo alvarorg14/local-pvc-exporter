@@ -188,7 +188,7 @@ flowchart LR
 
 ## 💻 Local Development
 
-Requires Go 1.23+ and [golangci-lint](https://golangci-lint.run/) for linting.
+Requires Go 1.26+ and [golangci-lint](https://golangci-lint.run/) for linting.
 
 Run `make help` to list all available targets:
 
@@ -242,6 +242,10 @@ Contributions are welcome! Issues and pull requests help make this project bette
 If you discover a security vulnerability, please report it via a [private GitHub security advisory](https://github.com/alvarorg14/local-pvc-exporter/security/advisories/new). Do **not** open a public issue.
 
 See [SECURITY.md](SECURITY.md) for the full security policy.
+
+**Dependency maintenance:** [Renovate](https://docs.renovatebot.com/) opens pull requests for Go modules, Docker base images, and GitHub Actions updates. Install the [Renovate GitHub App](https://github.com/apps/renovate) on this repository to enable it.
+
+**Vulnerability scanning:** CI runs [`govulncheck`](https://go.dev/security/vuln/) on every push and pull request to detect known vulnerabilities in Go dependencies that affect this codebase.
 
 ## 📄 License
 
