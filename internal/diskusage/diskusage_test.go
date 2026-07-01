@@ -34,6 +34,12 @@ func TestMeasure(t *testing.T) {
 	if result.InodesUsed < 3 {
 		t.Errorf("expected at least 3 inodes (root dir, sub dir, 2 files), got %d", result.InodesUsed)
 	}
+	if result.InodesTotal <= 0 {
+		t.Errorf("expected positive InodesTotal, got %d", result.InodesTotal)
+	}
+	if result.InodesFree <= 0 {
+		t.Errorf("expected positive InodesFree, got %d", result.InodesFree)
+	}
 }
 
 func TestMeasureNotDirectory(t *testing.T) {

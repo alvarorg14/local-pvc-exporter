@@ -28,12 +28,16 @@ Default prefix: `local_pvc` (configurable). Default unit: `bytes`.
 | `local_pvc_used_bytes` | Measured used capacity (du-style) |
 | `local_pvc_available_bytes` | Capacity minus used (clamped at 0) |
 | `local_pvc_used_ratio` | Used / capacity ratio (0..1) |
-| `local_pvc_inodes_used` | File and directory count |
+| `local_pvc_inodes_used` | File and directory count in the PVC data path (du-style) |
+| `local_pvc_inodes` | Total filesystem inodes (equivalent to `kubelet_volume_stats_inodes`) |
+| `local_pvc_inodes_free` | Free filesystem inodes (equivalent to `kubelet_volume_stats_inodes_free`) |
 | `local_pvc_scrape_duration_seconds` | Last scrape duration |
 | `local_pvc_scrape_errors_total` | Cumulative scrape errors |
 | `local_pvc_last_scrape_timestamp_seconds` | Unix timestamp of last scrape |
 
 **Labels:** `persistentvolumeclaim`, `namespace`, `persistentvolume`, `storageclass`, `node`, `volume_type`
+
+Inode metrics differ in scope: `local_pvc_inodes` and `local_pvc_inodes_free` are filesystem-level (the whole backing disk for local/hostPath volumes, matching kubelet behavior), while `local_pvc_inodes_used` is a per-PVC du-style count of files and directories inside the volume path and therefore intentionally differs from `kubelet_volume_stats_inodes_used` on k3s and similar setups.
 
 When using non-byte units (`kib`, `mib`, `gib`), the metric suffix changes accordingly (e.g. `local_pvc_used_kib`).
 
