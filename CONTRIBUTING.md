@@ -5,7 +5,7 @@ Thank you for your interest in contributing!
 ## Getting started
 
 1. Fork the repository and clone it locally.
-2. Install Go 1.23+.
+2. Install Go 1.26+.
 3. Run `go mod download`.
 4. Make your changes and add tests where appropriate.
 5. Run `make test` and `make lint` before opening a pull request.

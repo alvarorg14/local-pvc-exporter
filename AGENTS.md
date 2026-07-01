@@ -19,7 +19,7 @@ This document provides context and guidelines for AI coding assistants working o
 
 - **Location**: `cmd/local-pvc-exporter/` (main entry), `internal/` (core logic)
 - **Module**: `github.com/alvarorg14/local-pvc-exporter`
-- **Go version**: 1.23+
+- **Go version**: 1.26+
 - **Key dependencies**: `prometheus/client_golang`, `k8s.io/client-go`
 
 ### Key Components
@@ -96,7 +96,7 @@ make helm-lint # helm lint + helm template
 
 ### Prerequisites
 
-- Go 1.23+
+- Go 1.26+
 - [golangci-lint](https://golangci-lint.run/) v2.x (CI uses v2.12.2)
 - Helm 3 (for chart validation)
 - kubectl (for `make run`)

@@ -188,7 +188,7 @@ flowchart LR
 
 ## 💻 Local Development
 
-Requires Go 1.23+ and [golangci-lint](https://golangci-lint.run/) for linting.
+Requires Go 1.26+ and [golangci-lint](https://golangci-lint.run/) for linting.
 
 Run `make help` to list all available targets:
 
