@@ -179,10 +179,9 @@ flowchart LR
 
 <div align="center">
 
-<!-- Drop your Grafana dashboard screenshot at assets/grafana-dashboard.png -->
-![Grafana dashboard placeholder — add assets/grafana-dashboard.png](assets/grafana-dashboard.png)
+![Grafana dashboard showing per-PVC storage metrics](assets/grafana-dashboard.png)
 
-*Add a Grafana dashboard screenshot at `assets/grafana-dashboard.png` to showcase PVC usage panels.*
+*Per-PVC usage, capacity, and scrape health panels powered by `local_pvc_*` metrics. A ready-to-import Grafana dashboard will be provided soon.*
 
 </div>
 
