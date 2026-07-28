@@ -122,9 +122,18 @@ Triggers on push/PR to `main`:
 |-----|---------|
 | test | `go mod verify`, `go test -race -coverprofile=coverage.out ./...`, `go build` |
 | lint | golangci-lint v2.12.2 |
-| vuln | `govulncheck ./...` |
 | helm | `helm lint`, `helm template`, `helm package` |
 | goreleaser | `goreleaser check`, `goreleaser release --snapshot --clean` |
+
+### Vulnerability scanning (`.github/workflows/vuln.yml`)
+
+Runs [`govulncheck`](https://go.dev/security/vuln/) separately from CI:
+
+| Trigger | Purpose |
+|---------|---------|
+| Weekly schedule (Mondays 06:00 UTC) | Catch new CVEs without a commit |
+| `workflow_dispatch` | Manual on-demand scan |
+| Pull request to `main` | Early visibility (non-blocking) |
 
 ### Dependency updates (Renovate)
 
