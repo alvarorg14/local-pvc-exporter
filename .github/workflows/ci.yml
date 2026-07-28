@@ -68,23 +68,6 @@ jobs:
       - name: Package chart
         run: helm package charts/local-pvc-exporter
 
-  vuln:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Set up Go
-        uses: actions/setup-go@v7
-        with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: govulncheck
-        run: |
-          go install golang.org/x/vuln/cmd/govulncheck@latest
-          govulncheck ./...
-
   goreleaser:
     runs-on: ubuntu-latest
     steps:

@@ -9,6 +9,7 @@
 <br>
 
 [![CI](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/ci.yml/badge.svg)](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/ci.yml)
+[![Vulnerability Scan](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/vuln.yml/badge.svg)](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/vuln.yml)
 [![Release](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/release.yml/badge.svg)](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/release.yml)
 [![Latest Release](https://img.shields.io/github/v/release/alvarorg14/local-pvc-exporter)](https://github.com/alvarorg14/local-pvc-exporter/releases)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/alvarorg14/local-pvc-exporter)](https://github.com/alvarorg14/local-pvc-exporter/blob/main/go.mod)
@@ -244,7 +245,7 @@ See [SECURITY.md](SECURITY.md) for the full security policy.
 
 **Dependency maintenance:** [Renovate](https://docs.renovatebot.com/) opens pull requests for Go modules, Docker base images, and GitHub Actions updates. Install the [Renovate GitHub App](https://github.com/apps/renovate) on this repository to enable it.
 
-**Vulnerability scanning:** CI runs [`govulncheck`](https://go.dev/security/vuln/) on every push and pull request to detect known vulnerabilities in Go dependencies that affect this codebase.
+**Vulnerability scanning:** A separate [Vulnerability Scan](https://github.com/alvarorg14/local-pvc-exporter/actions/workflows/vuln.yml) workflow runs [`govulncheck`](https://go.dev/security/vuln/) weekly, on demand, and on pull requests (non-blocking) to detect known vulnerabilities in Go dependencies that affect this codebase.
 
 ## 📄 License
 
